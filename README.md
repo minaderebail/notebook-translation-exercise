@@ -76,3 +76,10 @@ Run the example email sending file:
 ```sh
 python app/email_service.py
 ```
+
+## Testing
+
+Run tests:
+```sh
+pytest
+```
