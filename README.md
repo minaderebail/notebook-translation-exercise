@@ -60,14 +60,14 @@ python app/example.py
 Run the unemployment report:
 
 ```sh
-python app/unemployment_report.py
+python -m app.unemployment_report
 ```
 
 
 Run the stocks report:
 
 ```sh
-python app/stocks_report.py
+python -m app.stocks_report
 ```
 
 

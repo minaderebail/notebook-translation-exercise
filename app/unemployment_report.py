@@ -1,18 +1,18 @@
-# this is the app/unemployment_report.py file...
+# this is the app/unemployment.py file...
 
 # LOCAL DEV (ENV VARS)
 
-import os
-from dotenv import load_dotenv
-
-load_dotenv() # looks in the ".env" file for env vars
-
-API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default="demo")
-
-
-import requests
 import json
 from pprint import pprint
+from statistics import mean
+
+import requests
+from plotly.express import line
+
+from app.alpha import API_KEY
+
+# UNEMPLOYMENT REPORT FUNCTIONALITY
+
 
 request_url = f"https://www.alphavantage.co/query?function=UNEMPLOYMENT&apikey={API_KEY}"
 
@@ -24,7 +24,6 @@ pprint(parsed_response)
 
 data = parsed_response["data"]
 
-
 # Challenge A
 #
 # What is the most recent unemployment rate? And the corresponding date?
@@ -35,15 +34,11 @@ print("LATEST UNEMPLOYMENT RATE:")
 #print(data[0])
 print(f"{data[0]['value']}%", "as of", data[0]["date"])
 
-
-
-
 # Challenge B
 #
 # What is the average unemployment rate for all months during this calendar year?
 # ... How many months does this cover?
 
-from statistics import mean
 
 this_year = [d for d in data if "2022-" in d["date"]]
 
@@ -54,12 +49,10 @@ print("-------------------------")
 print("AVG UNEMPLOYMENT THIS YEAR:", f"{mean(rates_this_year)}%")
 print("NO MONTHS:", len(this_year))
 
-
 # Challenge C
 #
 # Plot a line chart of unemployment rates over time.
 
-from plotly.express import line
 
 dates = [d["date"] for d in data]
 rates = [float(d["value"]) for d in data]

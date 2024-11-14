@@ -1,23 +1,18 @@
-# this is the app/stocks_report.py file...
+# this is the app/stocks.py file...
 
 # LOCAL DEV (ENV VARS)
 
-import os
-from dotenv import load_dotenv
+from pandas import read_csv
+from plotly.express import line
 
-load_dotenv() # looks in the ".env" file for env vars
+from app.alpha import API_KEY
 
-API_KEY = os.getenv("ALPHAVANTAGE_API_KEY", default="demo")
+# STOCK SELECTION
 
-
-# SELECT A SYMBOL
-
-symbol = input("Please input a symbol (e.g. 'NFLX'): ") or "NFLX"
+symbol = input("Please input a symbol (e.g. 'NFLX'): ")
 print("SYMBOL:", symbol)
 
-# FETCH THE DATA
-
-from pandas import read_csv
+# REPORT
 
 request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={symbol}&apikey={API_KEY}&outputsize=full&datatype=csv"
 
@@ -25,8 +20,7 @@ df = read_csv(request_url)
 
 print(df.columns)
 print(len(df))
-print(df.head())
-
+df.head()
 
 # Challenge A
 #
@@ -62,8 +56,6 @@ print(f"25TH PERCENTILE: ${recent_df['adjusted_close'].quantile(.25).round(2)}")
 # Challenge C
 #
 # Plot a line chart of adjusted closing prices over time (all time).
-
-from plotly.express import line
 
 fig = line(x=df["timestamp"], y=df["adjusted_close"],
             title=f"Stock Prices ({symbol})",
