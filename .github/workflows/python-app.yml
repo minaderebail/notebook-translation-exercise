@@ -9,6 +9,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
+# make this workflow manually runnable
+  # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
+  workflow_dispatch:
+
 permissions:
   contents: read
 
@@ -35,5 +39,11 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
+      env:
+        # set environment variables to use during testing
+        # ... using the repository secret values set securely via repo settings
+        ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
+        #SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+        #SENDGRID_SENDER_ADDRESS: ${{ secrets.SENDGRID_SENDER_ADDRESS }}
       run: |
         pytest
