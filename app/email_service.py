@@ -8,28 +8,25 @@ from dotenv import load_dotenv
 
 load_dotenv() # looks in the ".env" file for env vars
 
-SENDGRID_SENDER_ADDRESS = os.getenv("SENDGRID_SENDER_ADDRESS")
+SENDGRID_SENDER_ADDRESS = input("Please input the sender's email address: ")
+SENDGRID_RECIPIENT_ADDRESS = input("Please input the recipient's email address: ")
+SENDGRID_SUBJECT = input("Please input the email's subject line: ")
+SENDGRID_EMAIL_CONTENTS = input("Please type the email's contents: ")
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
-
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
 # HELPER FUNCTION:
 
-def send_email_with_sendgrid(recipient_address=SENDGRID_SENDER_ADDRESS,
-                             subject="[Shopping Cart App] Testing 123",
-                             html_content="<p>Hello World</p>"
+def send_email_with_sendgrid(sender_address = SENDGRID_SENDER_ADDRESS, 
+                             recipient_address = SENDGRID_RECIPIENT_ADDRESS,
+                             subject = SENDGRID_SUBJECT,
+                             html_content = SENDGRID_EMAIL_CONTENTS
                             ):
     """Sends an email to the given recipient address.
-
-        Params:
-            recipient_address (str): The email address of the recipient.
-
-            subject (str): The subject of the email.
-
-            html_content (str): The content of the email. Can pass a string formatted as HTML.
     """
+    print("SENDING EMAIL FROM:", sender_address)
     print("SENDING EMAIL TO:", recipient_address)
     print("SUBJECT:", subject)
     print("HTML:", html_content)
@@ -54,8 +51,11 @@ def send_email_with_sendgrid(recipient_address=SENDGRID_SENDER_ADDRESS,
         print(err)
 
 
+if __name__ == "__main__":
 
+    # SEND EXAMPLE EMAIL:
 
-# SEND EXAMPLE EMAIL:
-
-send_email_with_sendgrid(html_content="Hello. Tuesday Night")
+    send_email_with_sendgrid(sender_address = SENDGRID_SENDER_ADDRESS, 
+                             recipient_address = SENDGRID_RECIPIENT_ADDRESS,
+                             subject = SENDGRID_SUBJECT,
+                             html_content = SENDGRID_EMAIL_CONTENTS)

@@ -85,3 +85,19 @@ if __name__ == "__main__":
 
     fig = line(x=dates, y=rates, title="United States Unemployment Rate over time", labels= {"x": "Month", "y": "Unemployment Rate"})
     fig.show()
+
+    # SEND EMAIL
+    # to be honest this part isn't functioning perfectly because the formatting is weird
+    # and it asks for user input then overrrides it
+    # but I can't figure out how to get it to not ask for user input in the first place
+    # but it does send an email!
+    from app.email_service import send_email_with_sendgrid
+    unemployment_subject = "Unemployment Report"
+    latest_unemployment_rate = str(data[0]['value'])
+    avg_unemployment_this_year = str(mean(rates_this_year))
+    body_of_email_2 = str(("Here are some stats about unemployment rates. ", 
+                        "The latest unemployment rate is ", latest_unemployment_rate, 
+                        ". The average unemployment rate this year is ", avg_unemployment_this_year))
+
+    send_email_with_sendgrid(subject = unemployment_subject,
+                             html_content = body_of_email_2)
