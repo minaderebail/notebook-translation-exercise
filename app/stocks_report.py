@@ -79,6 +79,7 @@ if __name__ == "__main__":
     # but I can't figure out how to get it to not ask for user input in the first place
     # but it does send an email!
     from app.email_service import send_email_with_sendgrid
+    '''
     stocks_subject = "Stocks Report"
     latest_price = str(first_row['adjusted_close'])
     mean_price = str(recent_df['adjusted_close'].mean())
@@ -91,6 +92,17 @@ if __name__ == "__main__":
                         ". The median price is ", median_price,
                         ". The minimum price is ", min_price,
                         ". The maximum price is ", max_price))
+    '''
+    stocks_subject = "Stocks Report"
+    latest_price = first_row['adjusted_close']
+    mean_price = recent_df['adjusted_close'].mean()
+    median_price = recent_df['adjusted_close'].median()
+    min_price = recent_df['adjusted_close'].min()
+    max_price = recent_df['adjusted_close'].max()
+    body_of_email = f"""Here are some stats about {symbol}. The latest closing price is {latest_price}.
+    The mean price is {mean_price}. The median price is {median_price}. The minimum price is {min_price}.
+    The maximum price is {max_price}.
+    """
 
     send_email_with_sendgrid(subject = stocks_subject,
                              html_content = body_of_email)

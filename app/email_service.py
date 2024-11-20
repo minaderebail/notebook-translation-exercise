@@ -8,11 +8,9 @@ from dotenv import load_dotenv
 
 load_dotenv() # looks in the ".env" file for env vars
 
-SENDGRID_SENDER_ADDRESS = input("Please input the sender's email address: ")
-SENDGRID_RECIPIENT_ADDRESS = input("Please input the recipient's email address: ")
-SENDGRID_SUBJECT = input("Please input the email's subject line: ")
-SENDGRID_EMAIL_CONTENTS = input("Please type the email's contents: ")
+SENDGRID_SENDER_ADDRESS = os.getenv("SENDGRID_SENDER_ADDRESS")
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+
 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
@@ -20,9 +18,9 @@ from sendgrid.helpers.mail import Mail
 # HELPER FUNCTION:
 
 def send_email_with_sendgrid(sender_address = SENDGRID_SENDER_ADDRESS, 
-                             recipient_address = SENDGRID_RECIPIENT_ADDRESS,
-                             subject = SENDGRID_SUBJECT,
-                             html_content = SENDGRID_EMAIL_CONTENTS
+                             recipient_address = SENDGRID_SENDER_ADDRESS,
+                             subject = "This is a test email.",
+                             html_content = "This is some example content."
                             ):
     """Sends an email to the given recipient address.
     """
@@ -55,7 +53,11 @@ if __name__ == "__main__":
 
     # SEND EXAMPLE EMAIL:
 
+    recipient_address = input("Please input the recipient's email address: ")
+    subject = input("Please input the email's subject line: ")
+    email_contents = input("Please type the email's contents: ")
+
     send_email_with_sendgrid(sender_address = SENDGRID_SENDER_ADDRESS, 
-                             recipient_address = SENDGRID_RECIPIENT_ADDRESS,
-                             subject = SENDGRID_SUBJECT,
-                             html_content = SENDGRID_EMAIL_CONTENTS)
+                             recipient_address = recipient_address,
+                             subject = subject,
+                             html_content = email_contents)
