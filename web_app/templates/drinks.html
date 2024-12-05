@@ -1,0 +1,26 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "drinks" %}
+
+{% block content %}
+    <h2>Nonalcoholic Drinks</h2>
+
+    <table class="table table-hover table-responsive caption-top">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Image</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for drink in drinks[0:20] %}
+        <TR>
+            <TD class="c1">{{drink.idDrink}}</TD>
+            <TD class="c2">{{drink.strDrink}}</TD>
+            <TD><img src={{drink.strDrinkThumb}} width="100" height="100">
+        </TR>
+        </tbody>
+        {% endfor %}
+    </table>
+
+{% endblock %}
